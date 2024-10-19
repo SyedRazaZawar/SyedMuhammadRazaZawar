@@ -1641,7 +1641,7 @@ elif chatbot_functionality == "Audio to text":
         # Radio button to select the method of audio input
         st.subheader("Select an Option")
         audio_input_method = st.radio("Choose how you want to convert audio to text:", 
-                                      ("Upload Audio File to Text", "Record Audio to Text"))
+                                      ("Upload Audio File to Text"))
 
         # Option 1: File uploader for audio files
         if audio_input_method == "Upload Audio File to Text":
