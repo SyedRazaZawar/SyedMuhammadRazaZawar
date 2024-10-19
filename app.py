@@ -567,11 +567,11 @@ elif chatbot_functionality == "Youtube Video summarizer":
     # Function to fetch alternative thumbnails
     def try_alternative_thumbnail(video_id):
         alt_urls = [
-        f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg",  
-        f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",      
-        f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",      
-        f"https://img.youtube.com/vi/{video_id}/sddefault.jpg",      
-        f"https://img.youtube.com/vi/{video_id}/default.jpg"         
+            f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg",  
+            f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",      
+            f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",      
+            f"https://img.youtube.com/vi/{video_id}/sddefault.jpg",      
+            f"https://img.youtube.com/vi/{video_id}/default.jpg"         
         ]
         for url in alt_urls:
             response = requests.get(url)
