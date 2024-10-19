@@ -22,4 +22,8 @@ yfinance==0.2.44
 youtube_transcript_api==0.6.2
 opencv-python-headless
 sounddevice
+build-essential
+libasound-dev
+portaudio19-dev
+python3-pyaudio
 
