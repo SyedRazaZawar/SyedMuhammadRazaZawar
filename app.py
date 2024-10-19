@@ -603,7 +603,7 @@ elif chatbot_functionality == "Youtube Video summarizer":
             languages = {transcript.language_code: transcript.language for transcript in transcript_list}
             return languages
         except (NoTranscriptFound, TranscriptsDisabled):
-            st.warning("No transcripts available for this video.")
+            st.warning("I'm generating captions for the video please click again on fetch video info button......")
             return {}
 
     # Function to fetch captions
@@ -678,7 +678,7 @@ elif chatbot_functionality == "Youtube Video summarizer":
                         else:
                             st.error("Failed to fetch captions in the selected language.")
                     else:
-                        st.warning("No available captions for this video.")
+                        st.warning("Click again on fetch video info button. I'm loading your captions it will load slowly because large traffic.Thanks for your cooperation....")
                 else:
                     st.error("Failed to fetch video data. Check the provided URL.")
     
