@@ -24,5 +24,4 @@ opencv-python-headless
 sounddevice
 libasound-dev
 portaudio19-dev
-pyaudio
 
