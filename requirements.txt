@@ -20,5 +20,4 @@ streamlit==1.39.0
 Wikipedia_API==0.7.1
 yfinance==0.2.44
 youtube_transcript_api==0.6.2
-opencv-python
 opencv-python-headless
