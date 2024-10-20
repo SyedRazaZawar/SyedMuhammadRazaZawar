@@ -4,7 +4,7 @@ import streamlit as st
 st.sidebar.title("Chatbot Functionality")
 chatbot_functionality = st.sidebar.selectbox(
     "Choose Chatbot Functionality",
-    ["My Chatbot", "Image Editing", "Senior Chef for Recipe" , "Text to Image" , "Text to Audio" , "PDF and Wikipedia Summarization" , "Youtube Video summarizer" , "Text Summarization" , "Video Editing" , "Audio to text" , "Stock Prices Analysis App" , "Image to Text" , "Text to Music", ]
+    ["My Chatbot", "Image Editing", "Video Editing" , "Text to Image" , "Text to Audio" , "Senior Chef for Recipe" , "PDF and Wikipedia Summarization" , "Youtube Video summarizer" , "Text Summarization" , "Audio to text" , "Stock Prices Analysis App" , "Image to Text" , "Text to Music", ]
 )
 
 
