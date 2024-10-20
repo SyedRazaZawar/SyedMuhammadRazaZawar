@@ -626,7 +626,7 @@ elif chatbot_functionality == "Youtube Video summarizer":
             if captions:
                 return captions
             else:
-                st.warning(f"Attempt {retry_count+1}: Captions not available yet. Retrying in {wait_time} seconds...")
+                st.warning(f"Attempt {retry_count+1}: I'm generating your transcripts it will take time due to large traffic on server. Retrying in {wait_time} seconds...")
                 retry_count += 1
                 time.sleep(wait_time)  # Wait for a few seconds before retrying
 
