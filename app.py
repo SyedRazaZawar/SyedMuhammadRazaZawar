@@ -618,7 +618,7 @@ elif chatbot_functionality == "Youtube Video summarizer":
     # Function to automatically fetch captions until successful
     def retry_until_success(video_id, selected_language_code):
         retry_count = 0
-        max_retries = 6000  # Limit the number of retries
+        max_retries = 2000  # Limit the number of retries
         wait_time = 0.00000000001  # Wait time between retries in seconds
 
         while retry_count < max_retries:
