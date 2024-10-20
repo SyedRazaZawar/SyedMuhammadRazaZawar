@@ -1873,7 +1873,7 @@ elif chatbot_functionality == "Text to Image":
 
     # Button to trigger image generation
     if st.button("Generate Image"):
-        with st.spinner('Converting summary to audio...'):
+        with st.spinner('Generating Image...'):
             if user_input:
                 try:
                     # Send the prompt to the API
