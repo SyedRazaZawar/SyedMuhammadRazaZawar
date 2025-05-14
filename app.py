@@ -49,8 +49,6 @@ if chatbot_functionality == "My Chatbot":
 
     import os
 
-    ChatGoogleGenerativeAI.model_rebuild()
-
 # Load environment variables (if needed)
 
     load_dotenv(find_dotenv(), override=True)
