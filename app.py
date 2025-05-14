@@ -45,8 +45,6 @@ if chatbot_functionality == "My Chatbot":
 
     from langchain_google_genai import ChatGoogleGenerativeAI
 
-    from langchain_google_genai import BaseCache
-
     from dotenv import find_dotenv, load_dotenv
 
     import os
