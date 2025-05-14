@@ -35,7 +35,7 @@ if chatbot_functionality == "My Chatbot":
 
     # 1                           Ai Chatbot
 
-import streamlit as st
+    import streamlit as st
 
     import json
 
@@ -188,7 +188,6 @@ import streamlit as st
 
         st.write("**Response:**")
         st.write(response)
-
 
 
 
