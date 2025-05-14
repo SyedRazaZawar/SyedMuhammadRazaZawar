@@ -57,7 +57,7 @@ if chatbot_functionality == "My Chatbot":
 
 # Predefined Gemini API Key
 
-    API_KEY = "AIzaSyBS_cEWY4YfNURiEpajC_aKEoqekxc_HTI"  
+    API_KEY = "AIzaSyB6XnVrLA1mzEytOvvQL7Fczn3tfDyCyQQ"  
 
 
 # File to save sessions
