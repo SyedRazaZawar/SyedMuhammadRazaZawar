@@ -36,146 +36,158 @@ if chatbot_functionality == "My Chatbot":
     # 1                           Ai Chatbot
 
 import streamlit as st
-import json
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_google_genai import BaseCache  # Add this import
-from dotenv import find_dotenv, load_dotenv
-import os
 
-# FIX: Ensure model definitions are rebuilt
-ChatGoogleGenerativeAI.model_rebuild()
+    import json
+
+    from langchain_core.output_parsers import StrOutputParser
+
+    from langchain_core.prompts import ChatPromptTemplate
+
+    from langchain_google_genai import ChatGoogleGenerativeAI
+
+    from dotenv import find_dotenv, load_dotenv
+
+    import os
+
 
 # Load environment variables (if needed)
-load_dotenv(find_dotenv(), override=True)
+
+    load_dotenv(find_dotenv(), override=True)
+
 
 # Predefined Gemini API Key
-API_KEY = "AIzaSyB6XnVrLA1mzEytOvvQL7Fczn3tfDyCyQQ"
+
+    API_KEY = "AIzaSyB6XnVrLA1mzEytOvvQL7Fczn3tfDyCyQQ"  
+
 
 # File to save sessions
-SESSION_FILE = "sessions.json"
+
+    SESSION_FILE = "sessions.json"
+
 
 # Prompt Template
-prompt = ChatPromptTemplate.from_messages(
-    [
-        ("system", "You are a Gemini chatbot. Fully behave like gemini. This program is developed by Syed Muhammad Raza Zawar. He is an AI Engineer and developed many chatbots like messenger chatbot, chat with PDF, chat with website, stock exchange prediction, text summarization , image editing, video editing, and many other chatbots. Syed Muhammad Raza Zawar has completed his graduation in BSCS with 3.62 CGPA from National College of Business Administration & Economics Lahore. He has also completed his Certification in Web Development which is a 6 months duration course from Corvit Systems Lahore. In this Web development certification he has developed many projects on Front End development using HTML,CSS,Javascript,Bootstrap and for database use sql server. HE has also completed wordpress certification from digiskills which is a 3 months duration course.Also he have completed certification of C# Language from Microsoft.And Also he has Completed Certification of Computer networks from Microsoft.In Computer Networks course he have experienced to work on cisco packet tracer where he learn how to connect different hardware devices with one another. You can check his LinkedIn profile through this link https://www.linkedin.com/in/syed-muhammad-raza-zawar-17905b251/ if anyone questions about myself the show LinkedIn profile must."),
-        ('user', "Question: {question}")
-    ]
-)
 
-# Singleton instance for the model
-llm_instance = None
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", "You are a Gemini chatbot. Fully behave like gemini. This program is developed by Syed Muhammad Raza Zawar. He is an AI Engineer and developed many chatbots like messenger chatbot, chat with PDF, chat with website, stock exchange prediction, text summarization , image editing, video editing, and many other chatbots. Syed Muhammad Raza Zawar has completed his graduation in BSCS with 3.62 CGPA from National College of Business Administration & Economics Lahore. He has also completed his Certification in Web Development which is a 6 months duration course from Corvit Systems Lahore. In this Web development certification he has developed many projects on Front End development using HTML,CSS,Javascript,Bootstrap and for database use sql server. HE has also completed wordpress certification from digiskills which is a 3 months duration course.Also he have completed certification of C# Language from Microsoft.And Also he has Completed Certification of Computer networks from Microsoft.In Computer Networks course he have experienced to work on cisco packet tracer where he learn how to connect different hardware devices with one another. You can check his LinkedIn profile through this link https://www.linkedin.com/in/syed-muhammad-raza-zawar-17905b251/ if anyone questions about myself the show LinkedIn profile must."),
+            ('user', "Question: {question}")
+        ]
+    )
 
-def get_llm(api_key, engine):
-    global llm_instance
-    if llm_instance is None:
-        llm_instance = ChatGoogleGenerativeAI(
-            model=engine,
-            google_api_key=api_key,
-            allow_reuse=True  # Allow reuse to prevent duplicates
-        )
-    return llm_instance
+    # Singleton instance for the model
+    llm_instance = None
 
-def generate_response(question, engine, temperature, max_token):
-    try:
-        llm = get_llm(API_KEY, engine)
-        output_parser = StrOutputParser()
-        chain = prompt | llm | output_parser
-        answer = chain.invoke({'question': question})
-        return answer
-    except Exception as e:
-        return f"An error occurred: {e}"
+    def get_llm(api_key, engine):
+        global llm_instance
+        if llm_instance is None:
+            llm_instance = ChatGoogleGenerativeAI(
+                model=engine,
+                google_api_key=api_key,
+                allow_reuse=True  # Allow reuse to prevent duplicates
+            )
+        return llm_instance
 
-def load_sessions():
-    """Load sessions from the JSON file."""
-    if os.path.exists(SESSION_FILE):
-        with open(SESSION_FILE, "r") as file:
-            return json.load(file)
-    return {}
+    def generate_response(question, engine, temperature, max_token):
+        try:
+            llm = get_llm(API_KEY, engine)
+            output_parser = StrOutputParser()
+            chain = prompt | llm | output_parser
+            answer = chain.invoke({'question': question})
+            return answer
+        except Exception as e:
+            return f"An error occurred: {e}"
 
-def save_sessions(sessions):
-    """Save sessions to the JSON file."""
-    with open(SESSION_FILE, "w") as file:
-        json.dump(sessions, file)
+    def load_sessions():
+        """Load sessions from the JSON file."""
+        if os.path.exists(SESSION_FILE):
+            with open(SESSION_FILE, "r") as file:
+                return json.load(file)
+        return {}
 
-# Streamlit application
+    def save_sessions(sessions):
+        """Save sessions to the JSON file."""
+        with open(SESSION_FILE, "w") as file:
+            json.dump(sessions, file)
 
-# Load sessions from JSON file
-if 'sessions' not in st.session_state:
-    st.session_state.sessions = load_sessions()
-    if not st.session_state.sessions:
-        # Create the first session automatically if no sessions exist
-        st.session_state.sessions["Session 1"] = []
-    st.session_state.current_session = list(st.session_state.sessions.keys())[0] if st.session_state.sessions else None
+    # Streamlit application
 
-# Sidebar for session management
-st.sidebar.title("Session Management")
-if st.sidebar.button("Create New Session"):
-    # Automatically generate a session name
-    session_count = len(st.session_state.sessions) + 1
-    new_session_name = f"Session {session_count}"
-    st.session_state.sessions[new_session_name] = []
-    st.session_state.current_session = new_session_name
-    save_sessions(st.session_state.sessions)  # Save after creating a new session
+    # Load sessions from JSON file
+    if 'sessions' not in st.session_state:
+        st.session_state.sessions = load_sessions()
+        if not st.session_state.sessions:
+            # Create the first session automatically if no sessions exist
+            st.session_state.sessions["Session 1"] = []
+        st.session_state.current_session = list(st.session_state.sessions.keys())[0] if st.session_state.sessions else None
 
-# Select Previous Session
-if st.session_state.sessions:
-    previous_session = st.sidebar.selectbox("Select Previous Session", list(st.session_state.sessions.keys()), index=list(st.session_state.sessions.keys()).index(st.session_state.current_session))
-    if previous_session:
-        st.session_state.current_session = previous_session
+    # Sidebar for session management
+    st.sidebar.title("Session Management")
+    if st.sidebar.button("Create New Session"):
+        # Automatically generate a session name
+        session_count = len(st.session_state.sessions) + 1
+        new_session_name = f"Session {session_count}"
+        st.session_state.sessions[new_session_name] = []
+        st.session_state.current_session = new_session_name
+        save_sessions(st.session_state.sessions)  # Save after creating a new session
 
-# Display previous conversations
-if st.session_state.current_session:
-    st.sidebar.write(f"Current Session: **{st.session_state.current_session}**")
-    # Show messages from the current session
-    for msg in st.session_state.sessions[st.session_state.current_session]:
-        st.write(f"**{msg['role']}:** {msg['content']}")
+    # Select Previous Session
+    if st.session_state.sessions:
+        previous_session = st.sidebar.selectbox("Select Previous Session", list(st.session_state.sessions.keys()), index=list(st.session_state.sessions.keys()).index(st.session_state.current_session))
+        if previous_session:
+            st.session_state.current_session = previous_session
 
-# Button to delete the current session
-if st.sidebar.button("Delete Current Session"):
-    del st.session_state.sessions[st.session_state.current_session]
-    st.session_state.current_session = list(st.session_state.sessions.keys())[0] if st.session_state.sessions else None
-    save_sessions(st.session_state.sessions)  # Save after deleting a session
-    st.success("Current session deleted successfully.")
-
-# Button to clear all text in the current session
-if st.sidebar.button("Clear Text of this session"):
-    st.session_state.sessions[st.session_state.current_session] = []  # Clear messages in current session
-    save_sessions(st.session_state.sessions)  # Save after clearing text
-    st.success("All text in the current session cleared successfully.")
-
-# Button to delete all sessions
-if st.sidebar.button("Delete All Sessions"):
-    st.session_state.sessions.clear()  # Clear all sessions in session state
-    if os.path.exists(SESSION_FILE):
-        os.remove(SESSION_FILE)  # Remove the JSON file
-    st.session_state.current_session = None
-    st.success("All sessions deleted successfully.")
-
-# Select Gemini Model
-engine = st.sidebar.selectbox('Select Gemini Model', ['gemini-1.5-flash'])
-
-# Adjust Temperature and Token Value
-temperature = st.sidebar.slider('Temperature', min_value=0.0, max_value=1.0, value=0.7)
-max_token = st.sidebar.slider('Max Token', min_value=100, max_value=300, value=150)
-
-# Main interface for user input
-st.write("Please ask your Question")
-user_input = st.chat_input("Your Prompt:")
-
-if user_input:
-    # Generate and display the response
-    response = generate_response(user_input, engine, temperature, max_token)
-
-    # Save the question and response in the current session
+    # Display previous conversations
     if st.session_state.current_session:
-        st.session_state.sessions[st.session_state.current_session].append({"role": "user", "content": user_input})
-        st.session_state.sessions[st.session_state.current_session].append({"role": "assistant", "content": response})
-        save_sessions(st.session_state.sessions)  # Save after updating session
+        st.sidebar.write(f"Current Session: **{st.session_state.current_session}**")
+        # Show messages from the current session
+        for msg in st.session_state.sessions[st.session_state.current_session]:
+            st.write(f"**{msg['role']}:** {msg['content']}")
 
-    st.write("**Response:**")
-    st.write(response)
+    # Button to delete the current session
+    if st.sidebar.button("Delete Current Session"):
+        del st.session_state.sessions[st.session_state.current_session]
+        st.session_state.current_session = list(st.session_state.sessions.keys())[0] if st.session_state.sessions else None
+        save_sessions(st.session_state.sessions)  # Save after deleting a session
+        st.success("Current session deleted successfully.")
+
+    # Button to clear all text in the current session
+    if st.sidebar.button("Clear Text of this session"):
+        st.session_state.sessions[st.session_state.current_session] = []  # Clear messages in current session
+        save_sessions(st.session_state.sessions)  # Save after clearing text
+        st.success("All text in the current session cleared successfully.")
+
+    # Button to delete all sessions
+    if st.sidebar.button("Delete All Sessions"):
+        st.session_state.sessions.clear()  # Clear all sessions in session state
+        if os.path.exists(SESSION_FILE):
+            os.remove(SESSION_FILE)  # Remove the JSON file
+        st.session_state.current_session = None
+        st.success("All sessions deleted successfully.")
+
+    # Select Gemini Model
+    engine = st.sidebar.selectbox('Select Gemini Model', ['gemini-1.5-flash'])
+
+    # Adjust Temperature and Token Value
+    temperature = st.sidebar.slider('Temperature', min_value=0.0, max_value=1.0, value=0.7)
+    max_token = st.sidebar.slider('Max Token', min_value=100, max_value=300, value=150)
+
+    # Main interface for user input
+    st.write("Please ask your Question")
+    user_input = st.chat_input("Your Prompt:")
+
+    if user_input:
+        # Generate and display the response
+        response = generate_response(user_input, engine, temperature, max_token)
+
+        # Save the question and response in the current session
+        if st.session_state.current_session:
+            st.session_state.sessions[st.session_state.current_session].append({"role": "user", "content": user_input})
+            st.session_state.sessions[st.session_state.current_session].append({"role": "assistant", "content": response})
+            save_sessions(st.session_state.sessions)  # Save after updating session
+
+            
+
+        st.write("**Response:**")
+        st.write(response)
 
 
 
