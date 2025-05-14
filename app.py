@@ -35,7 +35,7 @@ if chatbot_functionality == "My Chatbot":
 
     # 1                           Ai Chatbot
 
-    import streamlit as st
+import streamlit as st
 import json
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
