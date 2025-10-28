@@ -1854,7 +1854,7 @@ elif chatbot_functionality == "Text to Image":
     # Hugging Face API URL and authorization
     
     API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
-    headers = {"Authorization": "Bearer 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"}.strip()
+    headers = {"Authorization": "Bearer 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"}
 
     # Function to send the query and retrieve the image from the API
     def query(payload):
@@ -2091,6 +2091,7 @@ elif chatbot_functionality == "Video Editing":
         edited_clip.close()
 
 ####################################################################################################################
+
 
 
 
