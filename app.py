@@ -165,7 +165,7 @@ if chatbot_functionality == "My Chatbot":
         st.success("All sessions deleted successfully.")
 
     # Select Gemini Model
-    engine = st.sidebar.selectbox('Select Gemini Model', ['gemini-1.5-flash'])
+    engine = st.sidebar.selectbox('Select Gemini Model', ['gemini-2.0-flash'])
 
     # Adjust Temperature and Token Value
     temperature = st.sidebar.slider('Temperature', min_value=0.0, max_value=1.0, value=0.7)
@@ -2091,6 +2091,7 @@ elif chatbot_functionality == "Video Editing":
         edited_clip.close()
 
 ####################################################################################################################
+
 
 
 
